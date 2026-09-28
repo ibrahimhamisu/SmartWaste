@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>Map View — SmartWaste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js"></script>
+<script src="/js/fontsize.js"></script>
+<script src="/js/translations.js"></script>
+<style>
+  #map { height: 340px; border-radius: 10px; border: 1px solid var(--line); }
+  .leaflet-popup-content { font-family: var(--font-body); font-size: 0.85rem; }
+</style>
+<script src="/js/pwa-register.js" defer></script>
+</head>
+<body class="has-bottom-nav">
+
+<div class="topbar">
+  <h1>Map View</h1>
+</div>
+
+<main>
+  <div class="filter-row" id="filterRow">
+    <button class="chip active" data-filter="all">All Reports</button>
+    <button class="chip" data-filter="waste">Waste</button>
+    <button class="chip" data-filter="illegal-dumping">Illegal Dumping</button>
+  </div>
+
+  <div id="map"></div>
+
+  <div class="map-legend" id="legend">
+    <span><span class="dot" style="background:#16A34A"></span> Waste Report <b id="legWaste">0</b></span>
+    <span><span class="dot" style="background:#DC2626"></span> Illegal Dumping <b id="legDump">0</b></span>
+    <span><span class="dot" style="background:#F59E0B"></span> In Progress <b id="legProgress">0</b></span>
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <a href="/index.html"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg></span><span data-i18n="home">Home</span></a>
+  <a href="/my-reports.html"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span><span data-i18n="reports">Reports</span></a>
+  <a href="/map.html" class="active"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span data-i18n="map">Map</span></a>
+  <a href="/profile.html"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span data-i18n="profile">Profile</span></a>
+</nav>
+
+<script src="/js/auth.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/map.js"></script>
+</body>
+</html>

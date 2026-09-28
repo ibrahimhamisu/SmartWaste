@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>Profile — SmartWaste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js"></script>
+<script src="/js/fontsize.js"></script>
+<script src="/js/translations.js"></script>
+<script src="/js/pwa-register.js" defer></script>
+</head>
+<body class="has-bottom-nav">
+
+<div class="topbar"><h1 data-i18n="profile">Profile</h1></div>
+
+<main>
+  <a href="/edit-profile.html" class="card profile-card-link" style="text-align:center;text-decoration:none;color:inherit;display:block;">
+    <div class="avatar" id="avatarInitial" style="width:64px;height:64px;font-size:1.6rem;margin:0 auto 14px;overflow:hidden;">?</div>
+    <h2 id="profileName">Name</h2>
+    <p class="lede" id="profileEmail" style="margin-top:4px;">email</p>
+    <p class="hint" id="profileRole"></p>
+    <p class="hint" style="color:var(--green);margin-top:10px;" data-i18n="editProfile">Edit Profile ›</p>
+  </a>
+
+  <div class="card settings-list">
+    <div class="settings-row">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span> <span data-i18n="darkMode">Dark mode</span></span>
+      <label class="switch">
+        <input type="checkbox" id="themeSwitch">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-row">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> <span data-i18n="pushNotifications">Push Notifications</span></span>
+      <label class="switch">
+        <input type="checkbox" id="pushSwitch">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-row" style="flex-direction:column;align-items:stretch;gap:8px;">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></span> <span data-i18n="fontSize">Font size</span></span>
+      <div class="chip-row" id="fontSizeChips">
+        <button type="button" class="chip" data-size="small">A</button>
+        <button type="button" class="chip" data-size="medium">A</button>
+        <button type="button" class="chip" data-size="large">A</button>
+      </div>
+    </div>
+
+    <div class="settings-row" style="flex-direction:column;align-items:stretch;gap:8px;">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> <span data-i18n="language">Language</span></span>
+      <div class="chip-row" id="langChips">
+        <button type="button" class="chip" data-lang="en">English</button>
+        <button type="button" class="chip" data-lang="ha">Hausa</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card settings-list">
+    <a href="/notifications.html" class="settings-row" id="notifRow" style="display:none;">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> <span data-i18n="notifications">Notifications</span></span>
+      <span class="chev">›</span>
+    </a>
+    <a href="/users.html" class="settings-row" id="usersRow" style="display:none;">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> <span data-i18n="manageUsers">Manage Users</span></span>
+      <span class="chev">›</span>
+    </a>
+    <a href="/change-password.html" class="settings-row">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> <span data-i18n="changePassword">Change password</span></span>
+      <span class="chev">›</span>
+    </a>
+    <a href="/privacy-policy.html" class="settings-row">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> <span data-i18n="privacyPolicy">Privacy Policy</span></span>
+      <span class="chev">›</span>
+    </a>
+    <a href="/terms.html" class="settings-row">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span> <span data-i18n="termsConditions">Terms &amp; Conditions</span></span>
+      <span class="chev">›</span>
+    </a>
+    <a href="/about.html" class="settings-row">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span> <span data-i18n="aboutApp">About SmartWaste</span></span>
+      <span class="chev">›</span>
+    </a>
+    <a href="#" class="settings-row" id="logoutRow">
+      <span class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></span> <span data-i18n="logout">Logout</span></span>
+      <span class="chev">›</span>
+    </a>
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <a href="/index.html"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg></span><span data-i18n="home">Home</span></a>
+  <a href="/my-reports.html"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span><span data-i18n="reports">Reports</span></a>
+  <a href="/map.html"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span data-i18n="map">Map</span></a>
+  <a href="/profile.html" class="active"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span data-i18n="profile">Profile</span></a>
+</nav>
+
+<script src="/js/auth.js"></script>
+<script src="/js/push.js"></script>
+<script>
+const session = guardPage();
+document.getElementById('profileName').textContent = session.user.name;
+document.getElementById('profileEmail').textContent = session.user.email;
+document.getElementById('profileRole').textContent = 'Account type: ' + session.user.role;
+
+const avatarEl = document.getElementById('avatarInitial');
+if (session.user.photoURL) {
+  avatarEl.innerHTML = `<img src="${session.user.photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+} else {
+  avatarEl.textContent = session.user.name.charAt(0).toUpperCase();
+}
+
+document.getElementById('logoutRow').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+
+if (session.user.role === 'resident') {
+  document.getElementById('notifRow').style.display = 'flex';
+} else if (session.user.role === 'admin') {
+  document.getElementById('usersRow').style.display = 'flex';
+}
+
+const themeSwitch = document.getElementById('themeSwitch');
+themeSwitch.checked = (localStorage.getItem('sw_theme') === 'dark');
+themeSwitch.addEventListener('change', () => toggleTheme(themeSwitch.checked));
+
+// Push notifications toggle
+const pushSwitch = document.getElementById('pushSwitch');
+isPushSubscribed().then(subscribed => { pushSwitch.checked = subscribed; });
+pushSwitch.addEventListener('change', async () => {
+  pushSwitch.disabled = true;
+  try {
+    if (pushSwitch.checked) {
+      await enablePush(session);
+    } else {
+      await disablePush(session);
+    }
+  } catch (err) {
+    alert(err.message);
+    pushSwitch.checked = await isPushSubscribed();
+  } finally {
+    pushSwitch.disabled = false;
+  }
+});
+
+// Font size chips
+const fontChips = document.querySelectorAll('#fontSizeChips .chip');
+function syncFontChips() {
+  const current = localStorage.getItem('sw_fontsize') || 'medium';
+  fontChips.forEach(c => c.classList.toggle('active', c.dataset.size === current));
+}
+syncFontChips();
+fontChips.forEach(chip => chip.addEventListener('click', () => { setFontSize(chip.dataset.size); syncFontChips(); }));
+
+// Language chips
+const langChips = document.querySelectorAll('#langChips .chip');
+function syncLangChips() {
+  const current = localStorage.getItem('sw_lang') || 'en';
+  langChips.forEach(c => c.classList.toggle('active', c.dataset.lang === current));
+}
+syncLangChips();
+langChips.forEach(chip => chip.addEventListener('click', () => { setLanguage(chip.dataset.lang); syncLangChips(); }));
+</script>
+</body>
+</html>

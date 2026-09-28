@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>Sign In — SmartWaste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js"></script>
+<script src="/js/fontsize.js"></script>
+<script src="/js/translations.js"></script>
+<script src="/js/pwa-register.js" defer></script>
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand-logo">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-2.7l1.9-3.3"/><path d="m10 15-3 3 3 3"/><path d="M9.8 3.8 14 8l-4 4"/><path d="m11.5 12 3.5 6"/><path d="M19.2 19h-4.8l3.5-6"/><path d="m14 21 3-3-3-3"/></svg></span>
+      <span class="name" data-i18n="appName">SmartWaste</span>
+    </div>
+
+    <h2 data-i18n="welcomeBack">Welcome back</h2>
+    <p class="auth-sub" data-i18n="signInSub">Sign in to continue reporting or managing waste in your community.</p>
+
+    <div class="role-toggle" id="roleToggle">
+      <button type="button" class="active" data-role="resident" data-i18n="resident">Resident</button>
+      <button type="button" data-role="admin" data-i18n="admin">Admin</button>
+    </div>
+
+    <form id="loginForm">
+      <label for="email" data-i18n="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com">
+
+      <label for="password" data-i18n="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="••••••••">
+      <p class="hint" style="text-align:right;margin-top:6px;"><a href="/forgot-password.html" data-i18n="forgotPassword">Forgot password?</a></p>
+
+      <button type="submit" class="btn btn-primary" data-i18n="signIn">Sign In</button>
+      <div id="formMsg"></div>
+    </form>
+
+    <p class="auth-switch"><span data-i18n="noAccount">Don't have an account?</span> <a href="/signup.html" data-i18n="signUp">Sign up</a></p>
+  </div>
+</div>
+
+<script src="/js/auth.js"></script>
+<script>
+let selectedRole = 'resident';
+document.getElementById('roleToggle').addEventListener('click', (e) => {
+  if (!e.target.matches('button')) return;
+  document.querySelectorAll('#roleToggle button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  selectedRole = e.target.dataset.role;
+});
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('formMsg');
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+
+  try {
+    const data = await apiLogin(email, password, selectedRole);
+    saveSession(data.token, data.user);
+    window.location.href = data.user.role === 'admin' ? '/admin.html' : '/index.html';
+  } catch (err) {
+    msg.className = 'error';
+    msg.textContent = '❌ ' + err.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+});
+</script>
+</body>
+</html>

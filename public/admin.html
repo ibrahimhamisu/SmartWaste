@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>Admin Dashboard — SmartWaste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js"></script>
+<script src="/js/fontsize.js"></script>
+<script src="/js/translations.js"></script>
+<script src="/js/pwa-register.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Admin Dashboard</h1>
+  <span id="welcomeText">All community reports</span>
+  <div class="admin-menu-wrap">
+    <button class="icon-btn" id="menuToggleBtn" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+    </button>
+    <nav class="dropdown-menu" id="dropdownMenu">
+      <a href="/map.html">Map View</a>
+      <a href="/users.html">Users</a>
+      <a href="/about.html">About</a>
+      <a href="/change-password.html">Change Password</a>
+      <a href="#" id="themeToggleLink">🌙 Dark mode</a>
+      <a href="#" id="logoutLink">Logout</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <div class="stats" id="stats">
+    <div class="stat"><span class="num" id="statTotal">0</span><span class="lbl">Total</span></div>
+    <div class="stat"><span class="num" id="statPending">0</span><span class="lbl">Pending</span></div>
+    <div class="stat"><span class="num" id="statProgress">0</span><span class="lbl">In progress</span></div>
+    <div class="stat"><span class="num" id="statResolved">0</span><span class="lbl">Resolved</span></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Reports trend (last 6 months)</h3>
+      <canvas id="trendChart" height="140"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Report types</h3>
+      <canvas id="typeChart" height="140"></canvas>
+    </div>
+  </div>
+
+  <div class="admin-toolbar">
+    <input type="text" id="searchInput" placeholder="Search reports by description, address, reporter...">
+    <button class="btn btn-export" id="exportBtn">⬇ Export CSV</button>
+  </div>
+
+  <div class="filter-row" id="filterRow">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="pending">Pending</button>
+    <button class="chip" data-filter="in-progress">In progress</button>
+    <button class="chip" data-filter="resolved">Resolved</button>
+  </div>
+
+  <div id="reportList"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

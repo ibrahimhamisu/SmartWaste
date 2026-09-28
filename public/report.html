@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>Report Waste — SmartWaste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js"></script>
+<script src="/js/fontsize.js"></script>
+<script src="/js/translations.js"></script>
+<script src="/js/pwa-register.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/index.html" style="color:#fff;text-decoration:none;font-size:1.1rem;">←</a>
+  <h1 id="pageTitle">Report Waste</h1>
+</div>
+
+<main>
+  <p class="lede">Take a photo and provide details of the waste.</p>
+
+  <div class="card">
+    <form id="reportForm">
+
+      <div class="type-toggle" id="typeToggle">
+        <button type="button" class="active" data-type="waste"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></span> Waste</button>
+        <button type="button" data-type="illegal-dumping"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span> Illegal Dumping</button>
+      </div>
+
+      <label for="photo">Photo</label>
+      <div class="photo-tap" id="photoTap">
+        <span id="photoTapText"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span> Tap to add photo (recommended)</span>
+        <input type="file" id="photo" name="photo" accept="image/*" capture="environment" style="display:none;">
+      </div>
+
+      <label for="wasteType">Waste type</label>
+      <select id="wasteType" name="wasteType">
+        <option>General waste</option>
+        <option>Plastic</option>
+        <option>Organic / Food waste</option>
+        <option>Construction debris</option>
+        <option>Electronic waste</option>
+        <option>Other</option>
+      </select>
+
+      <label>Location</label>
+      <div class="type-toggle" id="locModeToggle">
+        <button type="button" class="active" data-mode="current">I'm at the location</button>
+        <button type="button" data-mode="different">Different location</button>
+      </div>
+
+      <div id="currentLocBlock" style="margin-top:8px;">
+        <div class="loc-row">
+          <button type="button" class="btn btn-loc" id="getLocBtn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> Use my current location</button>
+          <span class="loc-status" id="locStatus">No location captured yet</span>
+        </div>
+      </div>
+
+      <div id="pickLocBlock" style="display:none;margin-top:8px;">
+        <p class="hint" style="margin-bottom:8px;">Tap on the map to drop a pin at the waste location.</p>
+        <div id="pickMap" style="height:200px;border-radius:10px;border:1px solid var(--line);"></div>
+        <span class="loc-status" id="pickLocStatus">No point selected yet</span>
+      </div>
+
+      <input type="hidden" id="latitude" name="latitude">
+      <input type="hidden" id="longitude" name="longitude">
+      <input type="text" id="address" name="address" placeholder="Landmark or address (optional)" style="margin-top:8px;">
+
+      <label for="description">Description (optional)</label>
+      <textarea id="description" name="description" placeholder="Add more details..."></textarea>
+
+      <button type="submit" class="btn btn-primary">Submit Report</button>
+      <div id="formMsg"></div>
+    </form>
+  </div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/report.js"></script>
+</body>
+</html>

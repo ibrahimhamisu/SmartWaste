@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>Edit Profile — SmartWaste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js"></script>
+<script src="/js/fontsize.js"></script>
+<script src="/js/pwa-register.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/profile.html" style="color:#fff;text-decoration:none;font-size:1.1rem;">←</a>
+  <h1>Edit Profile</h1>
+</div>
+
+<main>
+  <div class="card" style="text-align:center;">
+    <div class="avatar" id="avatarPreview" style="width:84px;height:84px;font-size:2rem;margin:0 auto 10px;overflow:hidden;cursor:pointer;">?</div>
+    <button type="button" class="btn btn-ghost" id="changePhotoBtn" style="font-size:0.8rem;">Change photo</button>
+    <input type="file" id="photoInput" accept="image/*" style="display:none;">
+    <div id="photoMsg"></div>
+  </div>
+
+  <div class="card">
+    <form id="profileForm">
+      <label for="name">Full name</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" disabled style="opacity:0.6;">
+      <p class="hint">Email can't be changed here. Contact an admin if you need this updated.</p>
+
+      <label for="address">Residential address (optional)</label>
+      <input type="text" id="address" placeholder="e.g. No. 12 Kofar Ruwa Road, Katsina">
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <div id="formMsg"></div>
+    </form>
+  </div>
+</main>
+
+<script src="/js/auth.js"></script>
+<script>
+const session = guardPage();
+const avatarPreview = document.getElementById('avatarPreview');
+const photoInput = document.getElementById('photoInput');
+
+function renderAvatar(photoURL, name) {
+  if (photoURL) {
+    avatarPreview.innerHTML = `<img src="${photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  } else {
+    avatarPreview.textContent = name.charAt(0).toUpperCase();
+  }
+}
+renderAvatar(session.user.photoURL, session.user.name);
+
+document.getElementById('name').value = session.user.name;
+document.getElementById('email').value = session.user.email;
+
+// Load full profile (address may not be in the session yet)
+fetch('/api/my-profile', { headers: { 'x-auth-token': session.token } })
+  .then(res => res.json())
+  .then(profile => {
+    document.getElementById('address').value = profile.address || '';
+    renderAvatar(profile.photoURL, profile.name);
+  });
+
+document.getElementById('changePhotoBtn').addEventListener('click', () => photoInput.click());
+avatarPreview.addEventListener('click', () => photoInput.click());
+
+photoInput.addEventListener('change', async () => {
+  const file = photoInput.files[0];
+  if (!file) return;
+
+  const photoMsg = document.getElementById('photoMsg');
+  const formData = new FormData();
+  formData.append('photo', file);
+
+  try {
+    const res = await fetch('/api/update-profile-picture', {
+      method: 'POST',
+      headers: { 'x-auth-token': session.token },
+      body: formData
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Could not update photo.');
+
+    renderAvatar(data.photoURL, session.user.name);
+    const updatedUser = { ...session.user, photoURL: data.photoURL };
+    saveSession(session.token, updatedUser);
+    photoMsg.className = 'success';
+    photoMsg.textContent = '✅ Photo updated.';
+  } catch (err) {
+    photoMsg.className = 'error';
+    photoMsg.textContent = '❌ ' + err.message;
+  }
+});
+
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const address = document.getElementById('address').value;
+  const msg = document.getElementById('formMsg');
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Saving...';
+
+  try {
+    const res = await fetch('/api/update-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-auth-token': session.token },
+      body: JSON.stringify({ name, address })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Could not save changes.');
+
+    saveSession(session.token, data.user);
+    msg.className = 'success';
+    msg.textContent = '✅ Profile updated!';
+    setTimeout(() => window.location.href = '/profile.html', 900);
+  } catch (err) {
+    msg.className = 'error';
+    msg.textContent = '❌ ' + err.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Save Changes';
+  }
+});
+</script>
+</body>
+</html>

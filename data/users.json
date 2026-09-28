@@ -1,0 +1,13 @@
+[
+  {
+    "id": "1790600885230",
+    "name": "Admin",
+    "email": "admin@smartwaste.com",
+    "role": "admin",
+    "address": "",
+    "photoURL": null,
+    "salt": "ee3fe5b1126c15295e60d01cb9396d15",
+    "hash": "c8784bd5b5e0c27091b2a97ddb2a099ca9639c9a405c6d0d3d589315043a62765bb8347065dfc81b12c692b7e54b0fd77ae61ebb8f81411cae86289b6e56b355",
+    "createdAt": "2026-09-28T13:08:05.232Z"
+  }
+]
